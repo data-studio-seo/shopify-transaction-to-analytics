@@ -1,0 +1,17 @@
+{% if first_time_accessed %} 
+{% if customer %}
+<script>
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+ 'event': 'purchase',
+ 'transactionId': '{{ order.order_number }}',
+ 'transactionTotal': '{{total_price | times: 0.01}}',
+ 'transactionProducts': [{% for line_item in line_items %}{
+'name': '{{line_item.title}}',
+'price': {{line_item.line_price | times: 0.01}},  
+'quantity': {{ line_item.quantity }} 
+}{% endfor %}]
+ });
+</script>
+{% endif %} 
+{% endif %} 
